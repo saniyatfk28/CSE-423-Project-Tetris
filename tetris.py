@@ -157,7 +157,7 @@ class TetrisGame:
 
     def update_background(self):
         """Update background based on score/intensity"""
-        intensity = min(self.score // 1000, 2)  # 0, 1, or 2
+        intensity = min(self.score // 10, 2)  # 0, 1, or 2
         if intensity != self.settings.intensity_level:
             self.settings.intensity_level = intensity
             self.settings.BACKGROUND_COLOR = (
@@ -175,6 +175,7 @@ class TetrisGame:
                 if (0 <= new_x < self.settings.GRID_WIDTH and
                         0 <= new_y < self.settings.GRID_HEIGHT):
                     self.grid[new_y][new_x] = 0
+                    self.score+=10
         self.create_particles(y)  # Create explosion particles
 
     def move_piece(self, dx, dy):
@@ -283,6 +284,7 @@ class TetrisGame:
 
         rows_cleared = self.clear_rows()
         self.score += rows_cleared * 100
+        print(f"Score: {self.score}")
         self.update_background()
 
         # Generate a new piece and check if it is valid
